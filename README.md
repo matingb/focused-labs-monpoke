@@ -19,10 +19,10 @@ Or use the following command to feed in an input file with commands:
 
 Any argument after the first will be ignored.
 
-###Sample Input
+### Sample Input
 Examples and sample input files that can be used while exploring this repo can be found [here](https://gitlab.com/focused-labs/monpoke/sample-inputs)
 
-###Game Summary
+### Game Summary
 - The game consists of 2 teams, each team has a variable number of Monpoké.
 - Each Monpoké has 2 attributes, HitPoints (HP) and Attack Power (AP).
 - The 2 teams engage in a simple turn-based battle.
@@ -38,7 +38,7 @@ standard out. The program should allow for:
     2. The battle begins and teams take turns back and forth
     3. A winner is determined
     
-####Commands
+#### Commands
 | Input                                      | Output                                                                               |
 | ---                                        | ---                                                                                  |
 | CREATE <team-id><monpoké-id> <hp> <attack> | <monpoké-id> has been assigned to team <team-id>!                                    |
@@ -47,8 +47,8 @@ standard out. The program should allow for:
 | * when a monpoké is defeated               | <enemy-monpoké-id> has been defeated!                                                |
 | * when all monpoké on a team are defeated  | <team-id> is the winner!                                                             |
 
-####Rules
-#####Team and Monpoké creation
+#### Rules
+##### Team and Monpoké creation
 - The first CREATE command for a Monpoké implicitly creates the team.
 - Teams can create Monpoké in any order.
 - Teams have multiple Monpoké
@@ -57,7 +57,7 @@ standard out. The program should allow for:
     - Pokemon must have 1 HP or greater
     - Pokemon must have 1 AP or greater
     - The battle cannot begin until there are two teams
-#####Battle
+##### Battle
 - The team that was created first takes the first turn
 - A turn is either choosing a Monpoké or attacking with the currently chosen Monpoké
 - The first turn of each team must be choosing a Monpoké
@@ -71,10 +71,10 @@ Monpoké
         - Who is not currently chosen
         - Who is defeated
 
-####Game Ends
+#### Game Ends
 - When all of a team’s Monpoké are defeated
 
-####Input
+#### Input
 - Commands are well-formed but might be against the rules. No need to handle special
 characters or typos in the commands themselves
 - In the event that a game violates the rules, the program should exit with exit code 1
