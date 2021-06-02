@@ -39,13 +39,13 @@ standard out. The program should allow for:
     3. A winner is determined
     
 #### Commands
-| Input                                      | Output                                                                               |
-| ---                                        | ---                                                                                  |
-| CREATE <team-id><monpoké-id> <hp> <attack> | <monpoké-id> has been assigned to team <team-id>!                                    |
-| ATTACK                                     | <current-monpoké-id> attacked <enemy-monpoké-id> for <current-monpoké-id-AP> damage! |
-| ICHOOSEYOU <monpoké-id>                    | <monpoké-id> has entered the battle!                                                 |
-| * when a monpoké is defeated               | <enemy-monpoké-id> has been defeated!                                                |
-| * when all monpoké on a team are defeated  | <team-id> is the winner!                                                             |
+| Input                                                 | Output                                                                               |
+| ---                                                   | ---                                                                                  |
+| CREATE `<team-id>` `<monpoké-id>` `<hp>` `<attack>`    | `<monpoké-id>` has been assigned to team `<team-id>`!                                    |
+| ATTACK                                                | `<current-monpoké-id>` attacked `<enemy-monpoké-id>` for `<current-monpoké-id-AP>` damage! |
+| ICHOOSEYOU `<monpoké-id>`                             | `<monpoké-id>` has entered the battle!                                                 |
+| * when a monpoké is defeated                          | `<enemy-monpoké-id>` has been defeated!                                                |
+| * when all monpoké on a team are defeated             | `<team-id>` is the winner!                                                             |
 
 #### Rules
 ##### Team and Monpoké creation
