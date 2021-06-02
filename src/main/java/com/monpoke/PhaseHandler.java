@@ -53,10 +53,6 @@ public class PhaseHandler {
                     outputStrings.add(battlePhase.battle(commandArgs));
                     break;
 
-                case "HEAL":
-                    outputStrings.add(battlePhase.battle(commandArgs));
-                    break;
-
                 default:
                     throw new IllegalArgumentException("Unreadable command input");
             }
