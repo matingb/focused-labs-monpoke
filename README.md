@@ -1,7 +1,4 @@
-# Monpoke
-
 [[_TOC_]]
-
 ### Usage
 This was developed with Java 8 and Maven 3.6.3, which must be installed to run this program.
 
