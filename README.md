@@ -12,12 +12,12 @@ Once this is run, use the following command to run and manually input rules unti
 
 Or use the following command to feed in an input file with commands:
 
-`mvn exec:java -Dexec.mainClass="com.monpoke.GameRunner" -Dexec.args="<filepath>"`
+`mvn exec:java -Dexec.mainClass="com.monpoke.GameRunner" -Dexec.args="sample_input.txt"`
 
 Any argument after the first will be ignored.
 
 ### Sample Input
-Examples and sample input files that can be used while exploring this repo can be found [here](https://gitlab.com/focused-labs/monpoke/sample-inputs)
+Additional examples and sample input files that can be used while exploring this repo can be found [here](https://gitlab.com/focused-labs/monpoke/sample-inputs)
 
 ### Game Summary
 - The game consists of 2 teams, each team has a variable number of Monpoké.
