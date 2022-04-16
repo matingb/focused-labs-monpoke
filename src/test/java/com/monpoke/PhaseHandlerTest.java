@@ -1,6 +1,7 @@
 package com.monpoke;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +49,7 @@ public class PhaseHandlerTest {
     }
 
     @Test
+    @Ignore
     public void fullGameOutput() {
         when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testAttack).thenReturn(testHeal);
         when(mockCreate.readyToBattle()).thenReturn(true);
