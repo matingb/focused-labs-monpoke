@@ -1,13 +1,17 @@
 ## Monpoke
 
 ### Quickstart
-`./gradlew build runSample` # sample game \
-`./gradlew build run`       # interactive mode
+
+`./gradlew build run`
+
+> Run Sample Game: \
+`./gradlew build runSample`
+
 
 ### Dependencies
 - Java 8
 - Gradle 7.3
-- Junit 4 
+- Junit 4
 
 ### Game Summary
 - The game consists of 2 teams, each team has a variable number of Monpoké.
