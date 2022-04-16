@@ -27,8 +27,6 @@ public class PhaseHandlerTest {
     String[] testChooseArr = new String[]{"ICHOOSEYOU", "Meekachu"};
     String testAttack = "ATTACK";
     String[] testAttackArr = new String[]{"ATTACK"};
-    String testHeal = "HEAL 7";
-    String[] testHealArr = new String[]{"HEAL", "7"};
     String invalidComm = "DO A THING";
 
     @Before
@@ -40,7 +38,6 @@ public class PhaseHandlerTest {
         mockBattle = mock(BattlePhase.class);
         when(mockBattle.battle(testChooseArr)).thenReturn("Test Choose Output");
         when(mockBattle.battle(testAttackArr)).thenReturn("Test Attack Output");
-        when(mockBattle.battle(testHealArr)).thenReturn("Test Heal Output");
 
         mockWinner = mock(Team.class);
         when(mockWinner.getTeamName()).thenReturn("Winning Test Team");
@@ -50,12 +47,12 @@ public class PhaseHandlerTest {
 
     @Test
     public void fullGameOutput() {
-        when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testAttack).thenReturn(testHeal);
+        when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testAttack);
         when(mockCreate.readyToBattle()).thenReturn(true);
-        when(mockBattle.getWinner()).thenReturn(null).thenReturn(null).thenReturn(null).thenReturn(null).thenReturn(mockWinner);
+        when(mockBattle.getWinner()).thenReturn(null).thenReturn(null).thenReturn(null).thenReturn(mockWinner);
 
         ArrayList<String> expectedOutput = new ArrayList<String>(Arrays.asList("Test Create Output", "Test Choose Output",
-                "Test Attack Output", "Test Heal Output", "Winning Test Team is the winner!"));
+                "Test Attack Output", "Winning Test Team is the winner!"));
         ArrayList<String> output = phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
         assertEquals(expectedOutput, output);
     }
