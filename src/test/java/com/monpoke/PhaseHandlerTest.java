@@ -46,7 +46,6 @@ public class PhaseHandlerTest {
     }
 
     @Test
-    @Ignore
     public void fullGameOutput() {
         when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testAttack);
         when(mockCreate.readyToBattle()).thenReturn(true);
