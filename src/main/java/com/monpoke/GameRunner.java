@@ -39,6 +39,7 @@ public class GameRunner {
     protected static Scanner getScannerType(String[] args) {
         if (args.length >= 1) {
             System.out.println("File input found. Using file to run the game.");
+            System.out.println(args[0]);
             String input = args[0];
             try {
                 return new Scanner(new File(input));

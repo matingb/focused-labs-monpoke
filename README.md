@@ -1,23 +1,17 @@
-[[_TOC_]]
-### Usage
-This was developed with Java 8 and Maven 3.6.3, which must be installed to run this program.
+## Monpoke
 
-To build out the module and run the tests, use the command:
+### Quickstart
 
-`mvn clean install`
+`./gradlew build run`
 
-Once this is run, use the following command to run and manually input rules until the game is finished:
+> Run Sample Game: \
+`./gradlew build runSample`
 
-`mvn exec:java -Dexec.mainClass="com.monpoke.GameRunner"`
 
-Or use the following command to feed in an input file with commands:
-
-`mvn exec:java -Dexec.mainClass="com.monpoke.GameRunner" -Dexec.args="sample_input.txt"`
-
-Any argument after the first will be ignored.
-
-### Sample Input
-Additional examples and sample input files that can be used while exploring this repo can be found [here](https://gitlab.com/focused-labs/monpoke/sample-inputs)
+### Dependencies
+- Java 8
+- Gradle 7.3
+- Junit 4
 
 ### Game Summary
 - The game consists of 2 teams, each team has a variable number of Monpoké.

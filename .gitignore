@@ -1,2 +1,8 @@
-*.idea
-target
+.idea
+target/
+.DS_Store
+
+.gradle
+!gradle-wrapper.jar
+**/build/
+!src/**/build/
