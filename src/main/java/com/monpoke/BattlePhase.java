@@ -54,6 +54,12 @@ public class BattlePhase {
             }
 
             return commandOutput;
+        } else if (battleCommands[0].equals("HEAL")) {
+            Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
+            Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
+            if (attackingMonpoke == null || attackedMonpoke == null) {
+                throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
+            }
         }
 
         return "Unreadable attack output";

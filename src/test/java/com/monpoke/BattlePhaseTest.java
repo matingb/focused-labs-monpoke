@@ -20,6 +20,7 @@ public class BattlePhaseTest {
 
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
+    String[] healString = new String[]{"HEAL"};
 
     @Before
     public void setUp() {
@@ -55,10 +56,21 @@ public class BattlePhaseTest {
     }
 
     @Test
-    public void noChosenMonpoke() {
+    public void noChosenMonpokeForAttack() {
         when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
         try {
             battlePhase.battle(attackString);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
+        }
+    }
+
+    @Test
+    public void noChosenMonpokeForHeal() {
+        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
+        try {
+            battlePhase.battle(healString);
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
