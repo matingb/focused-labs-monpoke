@@ -71,6 +71,15 @@ public class TeamTest {
     }
 
     @Test
+    public void givenATeamWithMonpokesWhenTriesToReviveAMonThatIsNotInTheTeamThenGetsAnError() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.reviveMonpoke("nonPresentMonpoke");
+        });
+
+        assertEquals("Rule violation - cannot revive a monpoke that is not in the team", exception.getMessage());
+    }
+
+    @Test
     public void reviveMoreThanOnceGetsAnError() {
         team.reviveMonpoke(firstMockName);
 
@@ -79,5 +88,16 @@ public class TeamTest {
         });
 
         assertEquals("Rule violation - each team only gets 1 revive per match", exception.getMessage());
+    }
+
+    @Test
+    public void givenAMonWithHealthWhenTriesToReviveShouldGetAnError() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(1);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.reviveMonpoke(firstMockName);
+        });
+
+        assertEquals("Rule violation - cannot revive an alive monpoke", exception.getMessage());
     }
 }

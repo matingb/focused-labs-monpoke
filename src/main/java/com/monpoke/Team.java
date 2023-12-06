@@ -39,8 +39,17 @@ public class Team {
     }
 
     public void reviveMonpoke(String monName) {
+        Monpoke mon = ownedMonpoke.get(monName);
+        if (mon == null) {
+            throw new IllegalArgumentException("Rule violation - cannot revive a monpoke that is not in the team");
+        }
+
         if (reviveCounter < 1) {
             throw new IllegalArgumentException("Rule violation - each team only gets 1 revive per match");
+        }
+
+        if(mon.getCurrentHealth() > 0) {
+            throw new IllegalArgumentException("Rule violation - cannot revive an alive monpoke");
         }
 
         this.reviveCounter--;
