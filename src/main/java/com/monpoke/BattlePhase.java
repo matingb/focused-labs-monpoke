@@ -65,18 +65,12 @@ public class BattlePhase {
 
             return attackingMonpoke.getName() + " healed for " + amountHealed + " to " + attackingMonpoke.getCurrentHealth();
         } else if (battleCommands[0].equals("REVIVE")) {
-            Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
-            Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
-            if (attackingMonpoke == null || attackedMonpoke == null) {
-                throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
-            }
-
             String monToRevive = battleCommands[1];
             currentTeam.reviveMonpoke(monToRevive);
 
             String commandOutput = monToRevive + " has been revived";
 
-            if (!attackingMonpoke.getName().equals(monToRevive)) {
+            if (currentTeam.getChosenMonpoke() == null) {
                 commandOutput += "\n";
                 commandOutput += chooseMon(monToRevive, currentTeam);
             }

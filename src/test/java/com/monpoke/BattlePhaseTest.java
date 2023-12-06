@@ -68,20 +68,6 @@ public class BattlePhaseTest {
     }
 
     @Test
-    public void reviveCommandNoChosenMonpokeForFirstTeam() {
-        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
-        validateExceptionDuringBattleForCommand(reviveString, "Rule violation - both teams did not have chosen monpoke out");
-    }
-
-    @Test
-    public void reviveCommandNoChosenMonpokeForSecondTeam() {
-        when(mockFirstTeam.getChosenMonpoke()).thenReturn(mockMon1);
-        when(mockSecTeam.getChosenMonpoke()).thenReturn(null);
-
-        validateExceptionDuringBattleForCommand(reviveString, "Rule violation - both teams did not have chosen monpoke out");
-    }
-
-    @Test
     public void healEndsTheTurn() {
         battlePhase.battle(healString);
 
@@ -122,8 +108,6 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulReviveMon() {
-        when(mockMon1.getName()).thenReturn("monToRevive");
-
         String output = battlePhase.battle(reviveString);
 
         verify(mockFirstTeam).reviveMonpoke("monToRevive");
@@ -132,6 +116,8 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulReviveDiffentMonThanSelected() {
+        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
+
         String output = battlePhase.battle(reviveString);
 
         verify(mockFirstTeam).reviveMonpoke("monToRevive");
