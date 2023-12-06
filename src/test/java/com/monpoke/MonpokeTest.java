@@ -63,9 +63,10 @@ public class MonpokeTest {
         Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
         mon.receiveAttack(attackingMonpoke);
 
-        mon.heal(2);
+        int amountHealed = mon.heal(2);
 
         assertEquals(4, mon.getCurrentHealth());
+        assertEquals(2, amountHealed);
     }
 
     @Test
@@ -74,8 +75,9 @@ public class MonpokeTest {
         Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
         mon.receiveAttack(attackingMonpoke);
 
-        mon.heal(10);
+        int amountHealed = mon.heal(10);
 
         assertEquals(5, mon.getCurrentHealth());
+        assertEquals(3, amountHealed);
     }
 }

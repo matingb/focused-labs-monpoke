@@ -35,9 +35,9 @@ public class Monpoke {
 
     public int heal(int healAmount) {
         int health = currentHealth + healAmount;
-        int amountHealed = Math.min(health, maxHealth);
+        int amountHealed = health > maxHealth ? maxHealth - currentHealth : healAmount;
 
-        currentHealth = amountHealed;
+        currentHealth += amountHealed;
 
         return amountHealed;
     }

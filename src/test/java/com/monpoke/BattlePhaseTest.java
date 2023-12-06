@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,8 +20,7 @@ public class BattlePhaseTest {
 
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
-    int healAmount = 30;
-    String[] healString = new String[]{"HEAL", String.valueOf(healAmount)};
+    String[] healString = new String[]{"HEAL", "30"};
 
     @Before
     public void setUp() {
@@ -91,11 +91,12 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulHealMon() {
-        when(mockMon1.heal(healAmount)).thenReturn(10);
+        when(mockMon1.heal(anyInt())).thenReturn(5);
+        when(mockMon1.getCurrentHealth()).thenReturn(10);
 
         String output = battlePhase.battle(healString);
 
-        assertEquals("TestMon1 healed for " + healAmount + " to " + 10, output);
+        assertEquals("TestMon1 healed for " + 5 + " to " + 10, output);
     }
 
     @Test
