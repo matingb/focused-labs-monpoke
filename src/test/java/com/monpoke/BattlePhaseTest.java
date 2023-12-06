@@ -1,9 +1,7 @@
 package com.monpoke;
 
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -21,6 +19,7 @@ public class BattlePhaseTest {
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
     String[] healString = new String[]{"HEAL", "30"};
+    String[] reviveString = new String[]{"REVIVE", "TestMon1"};
 
     @Before
     public void setUp() {
@@ -73,6 +72,13 @@ public class BattlePhaseTest {
     @Test
     public void healEndsTheTurn() {
         battlePhase.battle(healString);
+
+        assertEquals(1, battlePhase.getTurnCounter());
+    }
+
+    @Test
+    public void reviveEndsTheTurn() {
+        battlePhase.battle(reviveString);
 
         assertEquals(1, battlePhase.getTurnCounter());
     }

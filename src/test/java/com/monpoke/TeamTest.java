@@ -69,4 +69,15 @@ public class TeamTest {
         assertEquals(secMockPoke, team.getChosenMonpoke());
         assertEquals(1, team.getNumMonpoke());
     }
+
+    @Test
+    public void reviveMoreThanOnceGetsAnError() {
+        team.reviveMonpoke(firstMockName);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.reviveMonpoke(firstMockName);
+        });
+
+        assertEquals("Rule violation - each team only gets 1 revive per match", exception.getMessage());
+    }
 }
