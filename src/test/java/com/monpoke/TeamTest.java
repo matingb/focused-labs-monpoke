@@ -4,10 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.mockito.Mockito;
 
 public class TeamTest {
     Team team;
@@ -18,8 +16,8 @@ public class TeamTest {
 
     @Before
     public void setUp() {
-        firstMockPoke = Mockito.mock(Monpoke.class);
-        secMockPoke = Mockito.mock(Monpoke.class);
+        firstMockPoke = mock(Monpoke.class);
+        secMockPoke = mock(Monpoke.class);
         firstMockName = "MockPoke1";
         secMockName = "MockPoke2";
         when(firstMockPoke.getName()).thenReturn(firstMockName);
@@ -68,6 +66,36 @@ public class TeamTest {
         assertFalse(didFaint);
         assertEquals(secMockPoke, team.getChosenMonpoke());
         assertEquals(1, team.getNumMonpoke());
+    }
+
+    @Test
+    public void givenATeamWithMonpokesWhenTriesToHealAMonThatIsNotInTheTeamThenGetsAnError() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.healMonpoke("nonPresentMonpoke", 30);
+        });
+
+        assertEquals("Rule violation - cannot heal a monpoke that is not in the team", exception.getMessage());
+    }
+
+    @Test
+    public void healAFaintMonSAhouldThrowAnError() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(0);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.healMonpoke(firstMockName, 10);
+        });
+
+        assertEquals("Rule violation - cannot heal a monpoke with a current HP of less than 1", exception.getMessage());
+    }
+
+    @Test
+    public void whenHealsAMonPokeShouldGetTheAmountHealed() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(1);
+        when(firstMockPoke.receiveHeal(10)).thenReturn(6);
+
+        int amountHealed = team.healMonpoke(firstMockName, 10);
+
+        assertEquals(6, amountHealed);
     }
 
     @Test

@@ -97,7 +97,7 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulHealMon() {
-        when(mockMon1.heal(anyInt())).thenReturn(5);
+        when(mockFirstTeam.healMonpoke(mockMon1.getName(), 30)).thenReturn(5);
         when(mockMon1.getCurrentHealth()).thenReturn(10);
 
         String output = battlePhase.battle(healString);

@@ -38,6 +38,19 @@ public class Team {
         }
     }
 
+    public int healMonpoke(String monName, int healAmount) {
+        Monpoke mon = ownedMonpoke.get(monName);
+        if (mon == null) {
+            throw new IllegalArgumentException("Rule violation - cannot heal a monpoke that is not in the team");
+        }
+
+        if (mon.getCurrentHealth() < 1) {
+            throw new IllegalArgumentException("Rule violation - cannot heal a monpoke with a current HP of less than 1");
+        }
+
+        return mon.receiveHeal(healAmount);
+    }
+
     public void reviveMonpoke(String monName) {
         Monpoke mon = ownedMonpoke.get(monName);
         if (mon == null) {

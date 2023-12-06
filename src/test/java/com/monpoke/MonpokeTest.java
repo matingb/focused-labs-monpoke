@@ -37,7 +37,6 @@ public class MonpokeTest {
         assertEquals(-2, secHP);
     }
 
-
     @Test
     public void nameGetter() {
         Monpoke mon = new Monpoke("NameTester", 3, 1);
@@ -60,7 +59,7 @@ public class MonpokeTest {
     public void healShouldRestoreMonpokeHealth() {
         Monpoke mon = givenAMonWith(5, 2);
 
-        int amountHealed = mon.heal(2);
+        int amountHealed = mon.receiveHeal(2);
 
         assertEquals(4, mon.getCurrentHealth());
         assertEquals(2, amountHealed);
@@ -70,24 +69,13 @@ public class MonpokeTest {
     public void monpokeHealthAfterHealShouldNotBeBiggerThanInitialHealth() {
         Monpoke mon = givenAMonWith(6, 2);
 
-        int amountHealed = mon.heal(10);
+        int amountHealed = mon.receiveHeal(10);
 
         assertEquals(6, mon.getCurrentHealth());
         assertEquals(4, amountHealed);
     }
 
-    @Test
-    public void healAFaintMonSAhouldThrowAnError() {
-        Monpoke mon = givenAMonWith(6, 0);
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            mon.heal(10);
-        });
-
-        assertEquals("Rule violation - cannot heal a monpoke with a current HP of less than 1", exception.getMessage());
-    }
-
-    private static Monpoke givenAMonWith(int maxHealth, int actualHealth) {
+    private Monpoke givenAMonWith(int maxHealth, int actualHealth) {
         Monpoke mon = new Monpoke("HealthTester", maxHealth, 11);
         Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, maxHealth - actualHealth);
         mon.receiveAttack(attackingMonpoke);
