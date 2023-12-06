@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,46 +46,27 @@ public class BattlePhaseTest {
     @Test
     public void battleNotStarted() {
         battlePhase = new BattlePhase();
-        try {
-            battlePhase.battle(chooseString);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Rule violation - battle has not been started", e.getMessage());
-        }
+        validateExceptionDuringBattleForCommand(chooseString, "Rule violation - battle has not been started");
     }
 
     @Test
     public void noChosenMonpokeForAttack() {
         when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
-        try {
-            battlePhase.battle(attackString);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
-        }
+        validateExceptionDuringBattleForCommand(attackString, "Rule violation - both teams did not have chosen monpoke out");
     }
 
     @Test
     public void healCommandNoChosenMonpokeForFirstTeam() {
         when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
-        try {
-            battlePhase.battle(healString);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
-        }
+        validateExceptionDuringBattleForCommand(healString, "Rule violation - both teams did not have chosen monpoke out");
     }
 
     @Test
     public void healCommandNoChosenMonpokeForSecondTeam() {
         when(mockFirstTeam.getChosenMonpoke()).thenReturn(mockMon1);
         when(mockSecTeam.getChosenMonpoke()).thenReturn(null);
-        try {
-            battlePhase.battle(healString);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
-        }
+
+        validateExceptionDuringBattleForCommand(healString, "Rule violation - both teams did not have chosen monpoke out");
     }
 
     @Test
@@ -122,5 +102,13 @@ public class BattlePhaseTest {
         expectedOutput += "\nTestMon2 has been defeated!";
         assertEquals(expectedOutput, output);
         assertEquals(mockFirstTeam, battlePhase.getWinner());
+    }
+
+    private void validateExceptionDuringBattleForCommand(String[] command, String exceptionMessage) {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            battlePhase.battle(command);
+        });
+
+        assertEquals(exceptionMessage, exception.getMessage());
     }
 }
