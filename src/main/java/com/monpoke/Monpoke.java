@@ -34,6 +34,11 @@ public class Monpoke {
     }
 
     public int heal(int healAmount) {
+
+        if (currentHealth < 1) {
+            throw new IllegalArgumentException();
+        }
+
         int health = currentHealth + healAmount;
         int amountHealed = health > maxHealth ? maxHealth - currentHealth : healAmount;
 

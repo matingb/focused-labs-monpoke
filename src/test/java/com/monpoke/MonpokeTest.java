@@ -2,8 +2,7 @@ package com.monpoke;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class MonpokeTest {
 
@@ -58,10 +57,8 @@ public class MonpokeTest {
     }
 
     @Test
-    public void healShouldRestoreMonpokeHeal() {
-        Monpoke mon = new Monpoke("HealthTester", 5, 11);
-        Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
-        mon.receiveAttack(attackingMonpoke);
+    public void healShouldRestoreMonpokeHealth() {
+        Monpoke mon = givenAMonWith(5, 2);
 
         int amountHealed = mon.heal(2);
 
@@ -70,14 +67,28 @@ public class MonpokeTest {
     }
 
     @Test
-    public void monpokeHealthAfterHealShouldNotBeBiggerThanInitialHeal() {
-        Monpoke mon = new Monpoke("HealthTester", 5, 11);
-        Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
-        mon.receiveAttack(attackingMonpoke);
+    public void monpokeHealthAfterHealShouldNotBeBiggerThanInitialHealth() {
+        Monpoke mon = givenAMonWith(6, 2);
 
         int amountHealed = mon.heal(10);
 
-        assertEquals(5, mon.getCurrentHealth());
-        assertEquals(3, amountHealed);
+        assertEquals(6, mon.getCurrentHealth());
+        assertEquals(4, amountHealed);
+    }
+
+    @Test
+    public void healAFaintMonSAhouldThrowAnError() {
+        Monpoke mon = givenAMonWith(6, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            mon.heal(10);
+        });
+    }
+
+    private static Monpoke givenAMonWith(int maxHealth, int actualHealth) {
+        Monpoke mon = new Monpoke("HealthTester", maxHealth, 11);
+        Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, maxHealth - actualHealth);
+        mon.receiveAttack(attackingMonpoke);
+        return mon;
     }
 }
