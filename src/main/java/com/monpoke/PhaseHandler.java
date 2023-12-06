@@ -1,6 +1,7 @@
 package com.monpoke;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -17,17 +18,11 @@ public class PhaseHandler {
      */
     public ArrayList<String> runGame(Scanner commandScanner, CreatePhase createPhase, BattlePhase battlePhase) {
         ArrayList<String> outputStrings = new ArrayList<>();
-        boolean inBattle = false;
+        Boolean inBattle = false;
 
         while (battlePhase.getWinner() == null) {
-            String nextCommand = "";
-            try{
-                nextCommand = commandScanner.nextLine();
-            } catch(NoSuchElementException e){
-                throw new IllegalArgumentException("Input file has reached its end without a winner");
-            }
-
-            String[] commandArgs = nextCommand.split(DELIMITER);
+            String nextCommand = getNextCommand(commandScanner);
+            String[] commandArgs = parseCommandArgs(nextCommand);
 
             switch (commandArgs[0]) {
                 case "CREATE":
@@ -49,6 +44,7 @@ public class PhaseHandler {
                     outputStrings.add(battlePhase.battle(commandArgs));
                     break;
 
+
                 case "ATTACK":
                 case "HEAL":
                 case "REVIVE":
@@ -64,4 +60,15 @@ public class PhaseHandler {
         return outputStrings;
     }
 
+    private String getNextCommand(Scanner commandScanner) {
+        try {
+            return commandScanner.nextLine();
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Input file has reached its end without a winner");
+        }
+    }
+
+    private String[] parseCommandArgs(String command) {
+        return command.split(DELIMITER);
+    }
 }
