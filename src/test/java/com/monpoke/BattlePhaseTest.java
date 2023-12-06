@@ -119,6 +119,13 @@ public class BattlePhaseTest {
     }
 
     @Test
+    public void successfulReviveMon() {
+        String output = battlePhase.battle(reviveString);
+
+        assertEquals("TestMon1 has been revived", output);
+    }
+
+    @Test
     public void successfulDefeatMon() {
         when(mockSecTeam.didMonpokeFaint()).thenReturn(true);
         when(mockSecTeam.getNumAliveMonpoke()).thenReturn(1);

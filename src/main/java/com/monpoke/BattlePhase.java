@@ -72,6 +72,8 @@ public class BattlePhase {
             if (attackingMonpoke == null || attackedMonpoke == null) {
                 throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
             }
+
+            return attackingMonpoke.getName() + " has been revived";
         }
 
         return "Unreadable attack output";
