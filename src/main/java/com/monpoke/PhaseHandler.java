@@ -50,6 +50,8 @@ public class PhaseHandler {
                     break;
 
                 case "ATTACK":
+                case "HEAL":
+                case "REVIVE":
                     outputStrings.add(battlePhase.battle(commandArgs));
                     break;
 

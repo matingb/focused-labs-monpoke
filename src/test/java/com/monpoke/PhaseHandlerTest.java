@@ -1,7 +1,6 @@
 package com.monpoke;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,6 +26,10 @@ public class PhaseHandlerTest {
     String[] testChooseArr = new String[]{"ICHOOSEYOU", "Meekachu"};
     String testAttack = "ATTACK";
     String[] testAttackArr = new String[]{"ATTACK"};
+    String testHeal = "HEAL 30";
+    String[] testHealArr = new String[]{"HEAL", "30"};
+    String testRevive = "REVIVE Meekachu";
+    String[] testReviveArr = new String[]{"REVIVE", "Meekachu"};
     String invalidComm = "DO A THING";
 
     @Before
@@ -38,6 +41,8 @@ public class PhaseHandlerTest {
         mockBattle = mock(BattlePhase.class);
         when(mockBattle.battle(testChooseArr)).thenReturn("Test Choose Output");
         when(mockBattle.battle(testAttackArr)).thenReturn("Test Attack Output");
+        when(mockBattle.battle(testHealArr)).thenReturn("Test Heal Output");
+        when(mockBattle.battle(testReviveArr)).thenReturn("Test Revive Output");
 
         mockWinner = mock(Team.class);
         when(mockWinner.getTeamName()).thenReturn("Winning Test Team");
@@ -47,13 +52,17 @@ public class PhaseHandlerTest {
 
     @Test
     public void fullGameOutput() {
-        when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testAttack);
+        when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose)
+                .thenReturn(testAttack).thenReturn(testHeal).thenReturn(testRevive);
         when(mockCreate.readyToBattle()).thenReturn(true);
-        when(mockBattle.getWinner()).thenReturn(null).thenReturn(null).thenReturn(null).thenReturn(mockWinner);
+        when(mockBattle.getWinner()).thenReturn(null).thenReturn(null).thenReturn(null)
+                .thenReturn(null).thenReturn(null).thenReturn(mockWinner);
 
         ArrayList<String> expectedOutput = new ArrayList<String>(Arrays.asList("Test Create Output", "Test Choose Output",
-                "Test Attack Output", "Winning Test Team is the winner!"));
+                "Test Attack Output", "Test Heal Output", "Test Revive Output", "Winning Test Team is the winner!"));
+
         ArrayList<String> output = phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
+
         assertEquals(expectedOutput, output);
     }
 

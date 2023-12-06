@@ -34,6 +34,8 @@ public class TeamTest {
 
     @Test
     public void chosenMonpoke() {
+        when(secMockPoke.getCurrentHealth()).thenReturn(1);
+
         team.chooseMonpoke(secMockName);
 
         assertEquals(secMockPoke, team.getChosenMonpoke());
@@ -50,7 +52,19 @@ public class TeamTest {
     }
 
     @Test
+    public void chooseAFaintedMonSAhouldThrowAnError() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(0);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            team.chooseMonpoke(firstMockName);
+        });
+
+        assertEquals("Rule violation - cannot choose a fainted monpoke", exception.getMessage());
+    }
+
+    @Test
     public void checkMonpokeStatus() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(1);
         team.chooseMonpoke(firstMockName);
         when(firstMockPoke.getCurrentHealth()).thenReturn(0);
         when(secMockPoke.getCurrentHealth()).thenReturn(1);
@@ -77,14 +91,14 @@ public class TeamTest {
     }
 
     @Test
-    public void healAFaintMonSAhouldThrowAnError() {
+    public void healAFaintedMonSAhouldThrowAnError() {
         when(firstMockPoke.getCurrentHealth()).thenReturn(0);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             team.healMonpoke(firstMockName, 10);
         });
 
-        assertEquals("Rule violation - cannot heal a monpoke with a current HP of less than 1", exception.getMessage());
+        assertEquals("Rule violation - cannot heal a fainted monpoke", exception.getMessage());
     }
 
     @Test
@@ -129,7 +143,7 @@ public class TeamTest {
     }
 
     @Test
-    public void reviveShouldHeal1HPOfMonpoke() {
+    public void reviveShouldHealFullHPOfMonpoke() {
         when(firstMockPoke.getMaxHealth()).thenReturn(20);
         when(firstMockPoke.getCurrentHealth()).thenReturn(0);
 

@@ -37,6 +37,10 @@ public class Team {
         if (chosenMonpoke == null) {
             throw new IllegalArgumentException("Rule violation - Team " + teamName + " does not own the chosen Monpoke " + monName);
         }
+
+        if (chosenMonpoke.getCurrentHealth() < 1) {
+            throw new IllegalArgumentException("Rule violation - cannot choose a fainted monpoke");
+        }
     }
 
     public int healMonpoke(String monName, int healAmount) {
@@ -46,7 +50,7 @@ public class Team {
         }
 
         if (mon.getCurrentHealth() < 1) {
-            throw new IllegalArgumentException("Rule violation - cannot heal a monpoke with a current HP of less than 1");
+            throw new IllegalArgumentException("Rule violation - cannot heal a fainted monpoke");
         }
 
         return mon.receiveHeal(healAmount);
@@ -72,5 +76,9 @@ public class Team {
 
     public boolean didMonpokeFaint() {
         return chosenMonpoke.getCurrentHealth() <= 0;
+    }
+
+    public void removeMonpokeFromBattle() {
+        this.chosenMonpoke = null;
     }
 }

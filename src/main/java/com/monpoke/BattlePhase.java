@@ -49,6 +49,7 @@ public class BattlePhase {
                     + " for " + attackingMonpoke.getAttack() + " damage!";
 
             if (opposingTeam.didMonpokeFaint()) {
+                opposingTeam.removeMonpokeFromBattle();
                 commandOutput += "\n";
                 commandOutput += attackedMonpoke.getName() + " has been defeated!";
                 if (opposingTeam.getNumAliveMonpoke() == 0) {

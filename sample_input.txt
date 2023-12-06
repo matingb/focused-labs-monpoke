@@ -1,10 +1,19 @@
-CREATE Rocket Meekachu 3 1
+CREATE Rocket Meekachu 5 2
 CREATE Rocket Rastly 5 6
-CREATE Green Smorelax 2 1
+CREATE Green Smorelax 5 4
+CREATE Green Dragoniter 10 3
 ICHOOSEYOU Meekachu
 ICHOOSEYOU Smorelax
 ATTACK
 ATTACK
 ICHOOSEYOU Rastly
 ATTACK
+ATTACK
+ICHOOSEYOU Dragoniter
+ATTACK
+HEAL 10
+ATTACK
+REVIVE Smorelax
+ATTACK
+ICHOOSEYOU Smorelax
 ATTACK
