@@ -69,6 +69,20 @@ public class BattlePhaseTest {
     }
 
     @Test
+    public void reviveCommandNoChosenMonpokeForFirstTeam() {
+        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
+        validateExceptionDuringBattleForCommand(reviveString, "Rule violation - both teams did not have chosen monpoke out");
+    }
+
+    @Test
+    public void reviveCommandNoChosenMonpokeForSecondTeam() {
+        when(mockFirstTeam.getChosenMonpoke()).thenReturn(mockMon1);
+        when(mockSecTeam.getChosenMonpoke()).thenReturn(null);
+
+        validateExceptionDuringBattleForCommand(reviveString, "Rule violation - both teams did not have chosen monpoke out");
+    }
+
+    @Test
     public void healEndsTheTurn() {
         battlePhase.battle(healString);
 
