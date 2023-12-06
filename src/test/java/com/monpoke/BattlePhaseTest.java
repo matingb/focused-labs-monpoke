@@ -67,8 +67,20 @@ public class BattlePhaseTest {
     }
 
     @Test
-    public void noChosenMonpokeForHeal() {
+    public void healCommandNoChosenMonpokeForFirstTeam() {
         when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
+        try {
+            battlePhase.battle(healString);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Rule violation - both teams did not have chosen monpoke out", e.getMessage());
+        }
+    }
+
+    @Test
+    public void healCommandNoChosenMonpokeForSecondTeam() {
+        when(mockFirstTeam.getChosenMonpoke()).thenReturn(mockMon1);
+        when(mockSecTeam.getChosenMonpoke()).thenReturn(null);
         try {
             battlePhase.battle(healString);
             fail();
