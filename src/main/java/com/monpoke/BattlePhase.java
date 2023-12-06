@@ -73,7 +73,10 @@ public class BattlePhase {
                 throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
             }
 
-            return attackingMonpoke.getName() + " has been revived";
+            String monToRevive = battleCommands[1];
+            currentTeam.reviveMonpoke(monToRevive);
+
+            return monToRevive + " has been revived";
         }
 
         return "Unreadable attack output";

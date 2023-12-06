@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BattlePhaseTest {
 
@@ -18,7 +17,7 @@ public class BattlePhaseTest {
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
     String[] healString = new String[]{"HEAL", "30"};
-    String[] reviveString = new String[]{"REVIVE", "TestMon1"};
+    String[] reviveString = new String[]{"REVIVE", "monToRevive"};
 
     @Before
     public void setUp() {
@@ -105,6 +104,8 @@ public class BattlePhaseTest {
     @Test
     public void successfulFightMon() {
         String output = battlePhase.battle(attackString);
+
+        verify(mockMon2).receiveAttack(mockMon1);
         assertEquals("TestMon1 attacked TestMon2 for 1 damage!", output);
     }
 
@@ -115,6 +116,7 @@ public class BattlePhaseTest {
 
         String output = battlePhase.battle(healString);
 
+        verify(mockFirstTeam).healMonpoke(mockMon1.getName(), 30);
         assertEquals("TestMon1 healed for " + 5 + " to " + 10, output);
     }
 
@@ -122,7 +124,8 @@ public class BattlePhaseTest {
     public void successfulReviveMon() {
         String output = battlePhase.battle(reviveString);
 
-        assertEquals("TestMon1 has been revived", output);
+        verify(mockFirstTeam).reviveMonpoke("monToRevive");
+        assertEquals("monToRevive has been revived", output);
     }
 
     @Test
