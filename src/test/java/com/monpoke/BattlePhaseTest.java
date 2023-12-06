@@ -19,7 +19,8 @@ public class BattlePhaseTest {
 
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
-    String[] healString = new String[]{"HEAL", "30"};
+    String healAmount = "30";
+    String[] healString = new String[]{"HEAL", healAmount};
 
     @Before
     public void setUp() {
@@ -86,6 +87,15 @@ public class BattlePhaseTest {
     public void successfulFightMon() {
         String output = battlePhase.battle(attackString);
         assertEquals("TestMon1 attacked TestMon2 for 1 damage!", output);
+    }
+
+    @Test
+    public void successfulHealMon() {
+        when(mockMon1.getCurrentHealth()).thenReturn(10);
+
+        String output = battlePhase.battle(healString);
+
+        assertEquals("TestMon1 healed for " + healAmount + " to " + 10, output);
     }
 
     @Test
