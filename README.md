@@ -17,9 +17,11 @@
 - The game consists of 2 teams, each team has a variable number of Monpoké.
 - Each Monpoké has 2 attributes, HitPoints (HP) and Attack Power (AP).
 - The 2 teams engage in a simple turn-based battle.
-- A team’s turn can be either choosing a Monpoké OR attacking with their currently
-chosen Monpoké.
+- A team’s turn can be either choosing, heal, revive a friendly Monpoké or attack a Monpoké with their currently
+chosen one.
 - Attacking Monpoké depletes the enemy Monpoké HP for the value of their AP.
+- Healing Monpoké restore HP of the selected Monpoké for the amount of heal given.
+- Reviving a Monpoké restore all the HP of the Monpoké. (each team can use revive once per match)
 - A Monpoké is defeated when its HP is less than or equal to 0.
 - The game ends when all of a team’s Monpoké have been defeated.
 We ask that you build a program that plays the game! The program should accept text
@@ -30,13 +32,15 @@ standard out. The program should allow for:
     3. A winner is determined
     
 #### Commands
-| Input                                                 | Output                                                                               |
-| ---                                                   | ---                                                                                  |
-| CREATE `<team-id>` `<monpoké-id>` `<hp>` `<attack>`    | `<monpoké-id>` has been assigned to team `<team-id>`!                                    |
-| ATTACK                                                | `<current-monpoké-id>` attacked `<enemy-monpoké-id>` for `<current-monpoké-id-AP>` damage! |
-| ICHOOSEYOU `<monpoké-id>`                             | `<monpoké-id>` has entered the battle!                                                 |
-| * when a monpoké is defeated                          | `<enemy-monpoké-id>` has been defeated!                                                |
-| * when all monpoké on a team are defeated             | `<team-id>` is the winner!                                                             |
+| Input                                               | Output                                                                                     |
+|-----------------------------------------------------|--------------------------------------------------------------------------------------------|
+| CREATE `<team-id>` `<monpoké-id>` `<hp>` `<attack>` | `<monpoké-id>` has been assigned to team `<team-id>`!                                      |
+| ATTACK                                              | `<current-monpoké-id>` attacked `<enemy-monpoké-id>` for `<current-monpoké-id-AP>` damage! |
+| ICHOOSEYOU `<monpoké-id>`                           | `<monpoké-id>` has entered the battle!                                                     |
+| HEAL `<heal-amount>`                                | `<monpoké-id>` healed for `<heal-amount>` to `<new-health>`                                |
+| REVIVE `<monpoké-id>`                               | `<monpoké-id>` has been revived                                                            |
+| * when a monpoké is defeated                        | `<enemy-monpoké-id>` has been defeated!                                                    |
+| * when all monpoké on a team are defeated           | `<team-id>` is the winner!                                                                 |
 
 #### Rules
 ##### Team and Monpoké creation
@@ -50,17 +54,22 @@ standard out. The program should allow for:
     - The battle cannot begin until there are two teams
 ##### Battle
 - The team that was created first takes the first turn
-- A turn is either choosing a Monpoké or attacking with the currently chosen Monpoké
+- A turn is either choosing, healing, reviving or attacking a Monpoké with the a chosen Monpoké
 - The first turn of each team must be choosing a Monpoké
 - Attacks do damage equal to the attack value to the currently chosen enemy Monpoké
 - A Monpoké is considered defeated when it’s HP is 0 or lower
+- Healing Monpoké restore HP of the selected Monpoké for the amount of heal given.
+- Reviving a Monpoké restore all the HP of the Monpoké. (each team can use revive once per match)
 - When a Monpoké is defeated the owning team’s next turn must be choosing a new
 Monpoké
 - Validation
-    - A team cannot choose or attack with a Monpoké
+    - A team cannot choose, heal or attack with a Monpoké
         - Who is not on your team
         - Who is not currently chosen
-        - Who is defeated
+        - Who is defeated 
+  - A team cannot revive a Monpoké
+        - Who is not on your team
+        - Whos is alive  
 
 #### Game Ends
 - When all of a team’s Monpoké are defeated

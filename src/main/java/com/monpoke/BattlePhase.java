@@ -16,11 +16,15 @@ public class BattlePhase {
      * Processes a battle command. Handles validation for all battle rules.
      * The battle phase will always start with the team first in order.
      *
-     * @param battleCommands Must be an ICHOOSEYOU or ATTACK command.
+     * @param battleCommands Must be an ICHOOSEYOU | ATTACK | HEAL | REVIVE command.
      *                       ATTACK will ignore any parameters,
      *                       ICHOOSEYOU must have the parameters:
      *                       ICHOOSEYOU <mon-name>
-     * @return the output for the ICHOOSEYOU or ATTACK event
+     *                       HEAL must have the parameters:
+     *                       HEAL <heal-amount>
+     *                       REVIVE must have the parameters:
+     *                       REVIVE <mon-name>
+     * @return the output for the ICHOOSEYOU | ATTACK | HEAL | REVIVE event
      */
     public String battle(String[] battleCommands) {
         if (teams == null) {
