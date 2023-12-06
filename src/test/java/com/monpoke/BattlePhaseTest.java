@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -108,7 +107,7 @@ public class BattlePhaseTest {
     @Test
     public void successfulDefeatMon() {
         when(mockSecTeam.didMonpokeFaint()).thenReturn(true);
-        when(mockSecTeam.getNumMonpoke()).thenReturn(1);
+        when(mockSecTeam.getNumAliveMonpoke()).thenReturn(1);
 
         String output = battlePhase.battle(attackString);
         String expectedOutput = "TestMon1 attacked TestMon2 for 1 damage!";
@@ -119,7 +118,7 @@ public class BattlePhaseTest {
     @Test
     public void getWinner() {
         when(mockSecTeam.didMonpokeFaint()).thenReturn(true);
-        when(mockSecTeam.getNumMonpoke()).thenReturn(0);
+        when(mockSecTeam.getNumAliveMonpoke()).thenReturn(0);
 
         String output = battlePhase.battle(attackString);
         String expectedOutput = "TestMon1 attacked TestMon2 for 1 damage!";

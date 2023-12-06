@@ -49,7 +49,7 @@ public class BattlePhase {
             if (opposingTeam.didMonpokeFaint()) {
                 commandOutput += "\n";
                 commandOutput += attackedMonpoke.getName() + " has been defeated!";
-                if (opposingTeam.getNumMonpoke() == 0) {
+                if (opposingTeam.getNumAliveMonpoke() == 0) {
                     winner = currentTeam;
                 }
             }

@@ -54,18 +54,18 @@ public class TeamTest {
     public void checkMonpokeStatus() {
         team.chooseMonpoke(firstMockName);
         when(firstMockPoke.getCurrentHealth()).thenReturn(0);
+        when(secMockPoke.getCurrentHealth()).thenReturn(1);
 
         boolean didFaint = team.didMonpokeFaint();
         assertTrue(didFaint);
-        assertNull(team.getChosenMonpoke());
-        assertEquals(1, team.getNumMonpoke());
+        assertEquals(1, team.getNumAliveMonpoke());
 
         team.chooseMonpoke(secMockName);
         when(secMockPoke.getCurrentHealth()).thenReturn(1);
         didFaint = team.didMonpokeFaint();
         assertFalse(didFaint);
         assertEquals(secMockPoke, team.getChosenMonpoke());
-        assertEquals(1, team.getNumMonpoke());
+        assertEquals(1, team.getNumAliveMonpoke());
     }
 
     @Test

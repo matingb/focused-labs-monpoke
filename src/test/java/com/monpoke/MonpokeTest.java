@@ -34,7 +34,7 @@ public class MonpokeTest {
         int secHP = secMon.receiveAttack(attackingMon);
 
         assertEquals(1, firstHP);
-        assertEquals(-2, secHP);
+        assertEquals(0, secHP);
     }
 
     @Test

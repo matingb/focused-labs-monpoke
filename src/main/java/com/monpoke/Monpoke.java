@@ -30,7 +30,7 @@ public class Monpoke {
 
     public int receiveAttack(Monpoke attackingMonpoke) {
         currentHealth -= attackingMonpoke.getAttack();
-        return currentHealth;
+        return Math.max(currentHealth, 0);
     }
 
     public int receiveHeal(int healAmount) {

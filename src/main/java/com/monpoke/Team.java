@@ -2,6 +2,7 @@ package com.monpoke;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Team {
     private String teamName;
@@ -22,8 +23,8 @@ public class Team {
         return chosenMonpoke;
     }
 
-    public int getNumMonpoke() {
-        return ownedMonpoke.size();
+    public int getNumAliveMonpoke() {
+        return (int) ownedMonpoke.entrySet().stream().filter(monpokeEntry -> monpokeEntry.getValue().getCurrentHealth() > 0).count();
     }
 
     public void addMonpoke(Monpoke monpoke) {
@@ -66,14 +67,10 @@ public class Team {
         }
 
         this.reviveCounter--;
+        mon.receiveHeal(1);
     }
 
     public boolean didMonpokeFaint() {
-        if (chosenMonpoke.getCurrentHealth() <= 0) {
-            ownedMonpoke.remove(chosenMonpoke.getName());
-            chosenMonpoke = null;
-            return true;
-        }
-        return false;
+        return chosenMonpoke.getCurrentHealth() <= 0;
     }
 }
