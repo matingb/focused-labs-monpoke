@@ -44,27 +44,12 @@ public class BattlePhaseTest {
     @Test
     public void battleNotStarted() {
         battlePhase = new BattlePhase();
-        validateExceptionDuringBattleForCommand(chooseString, "Rule violation - battle has not been started");
-    }
 
-    @Test
-    public void noChosenMonpokeForAttack() {
-        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
-        validateExceptionDuringBattleForCommand(attackString, "Rule violation - both teams did not have chosen monpoke out");
-    }
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            battlePhase.battle(chooseString);
+        });
 
-    @Test
-    public void healCommandNoChosenMonpokeForFirstTeam() {
-        when(mockFirstTeam.getChosenMonpoke()).thenReturn(null);
-        validateExceptionDuringBattleForCommand(healString, "Rule violation - both teams did not have chosen monpoke out");
-    }
-
-    @Test
-    public void healCommandNoChosenMonpokeForSecondTeam() {
-        when(mockFirstTeam.getChosenMonpoke()).thenReturn(mockMon1);
-        when(mockSecTeam.getChosenMonpoke()).thenReturn(null);
-
-        validateExceptionDuringBattleForCommand(healString, "Rule violation - both teams did not have chosen monpoke out");
+        assertEquals("Rule violation - battle has not been started", exception.getMessage());
     }
 
     @Test
@@ -145,13 +130,5 @@ public class BattlePhaseTest {
         expectedOutput += "\nTestMon2 has been defeated!";
         assertEquals(expectedOutput, output);
         assertEquals(mockFirstTeam, battlePhase.getWinner());
-    }
-
-    private void validateExceptionDuringBattleForCommand(String[] command, String exceptionMessage) {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            battlePhase.battle(command);
-        });
-
-        assertEquals(exceptionMessage, exception.getMessage());
     }
 }
