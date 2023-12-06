@@ -19,7 +19,7 @@ public class BattlePhaseTest {
 
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
-    String[] healString = new String[]{"HEAL"};
+    String[] healString = new String[]{"HEAL", "30"};
 
     @Before
     public void setUp() {

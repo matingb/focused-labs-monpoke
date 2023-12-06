@@ -32,4 +32,9 @@ public class Monpoke {
         currentHealth -= attackingMonpoke.getAttack();
         return currentHealth;
     }
+
+    public void heal(int healAmount) {
+        int health = currentHealth + healAmount;
+        currentHealth = Math.min(health, maxHealth);
+    }
 }

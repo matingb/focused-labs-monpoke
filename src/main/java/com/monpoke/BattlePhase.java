@@ -34,7 +34,7 @@ public class BattlePhase {
             String monName = battleCommands[1];
             currentTeam.chooseMonpoke(monName);
             return monName + " has entered the battle!";
-        } else if(battleCommands[0].equals("ATTACK")) { // Could split out into another method if any more complicated
+        } else if (battleCommands[0].equals("ATTACK")) { // Could split out into another method if any more complicated
             Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
             Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
             if (attackingMonpoke == null || attackedMonpoke == null) {
@@ -62,6 +62,8 @@ public class BattlePhase {
                 throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
             }
 
+            int healAmount = Integer.parseInt(battleCommands[1]);
+            attackedMonpoke.heal(healAmount);
         }
 
         return "Unreadable attack output";

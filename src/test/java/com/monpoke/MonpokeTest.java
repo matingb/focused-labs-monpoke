@@ -56,4 +56,26 @@ public class MonpokeTest {
         Monpoke mon = new Monpoke("HealthTester", 3, 11);
         assertEquals(3, mon.getCurrentHealth());
     }
+
+    @Test
+    public void healShouldRestoreMonpokeHeal() {
+        Monpoke mon = new Monpoke("HealthTester", 5, 11);
+        Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
+        mon.receiveAttack(attackingMonpoke);
+
+        mon.heal(2);
+
+        assertEquals(4, mon.getCurrentHealth());
+    }
+
+    @Test
+    public void monpokeHealthAfterHealShouldNotBeBiggerThanInitialHeal() {
+        Monpoke mon = new Monpoke("HealthTester", 5, 11);
+        Monpoke attackingMonpoke = new Monpoke("HealthTester", 5, 3);
+        mon.receiveAttack(attackingMonpoke);
+
+        mon.heal(10);
+
+        assertEquals(5, mon.getCurrentHealth());
+    }
 }
