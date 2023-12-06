@@ -70,6 +70,13 @@ public class BattlePhaseTest {
     }
 
     @Test
+    public void healEndsTheTurn() {
+        battlePhase.battle(healString);
+
+        assertEquals(1, battlePhase.getTurnCounter());
+    }
+
+    @Test
     public void successfulChooseMon() {
         String output = battlePhase.battle(chooseString);
         assertEquals("TestMon1 has entered the battle!", output);

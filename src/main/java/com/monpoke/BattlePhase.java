@@ -4,6 +4,7 @@ package com.monpoke;
 public class BattlePhase {
 
     private Team[] teams;
+
     private int turnCounter = 0;
     private Team winner = null;
 
@@ -60,6 +61,7 @@ public class BattlePhase {
             if (attackingMonpoke == null || attackedMonpoke == null) {
                 throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
             }
+
         }
 
         return "Unreadable attack output";
@@ -67,5 +69,9 @@ public class BattlePhase {
 
     public Team getWinner() {
         return winner;
+    }
+
+    protected int getTurnCounter() {
+        return turnCounter;
     }
 }
