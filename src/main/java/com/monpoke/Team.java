@@ -67,7 +67,7 @@ public class Team {
         }
 
         this.reviveCounter--;
-        mon.receiveHeal(1);
+        mon.receiveHeal(mon.getMaxHealth());
     }
 
     public boolean didMonpokeFaint() {

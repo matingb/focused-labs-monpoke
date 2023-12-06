@@ -23,6 +23,7 @@ public class Monpoke {
     public int getCurrentHealth() {
         return currentHealth;
     }
+    public int getMaxHealth() { return maxHealth; }
 
     public int getAttack() {
         return attack;

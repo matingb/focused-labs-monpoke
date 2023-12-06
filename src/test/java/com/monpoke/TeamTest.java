@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TeamTest {
     Team team;
@@ -127,5 +126,15 @@ public class TeamTest {
         });
 
         assertEquals("Rule violation - cannot revive an alive monpoke", exception.getMessage());
+    }
+
+    @Test
+    public void reviveShouldHeal1HPOfMonpoke() {
+        when(firstMockPoke.getMaxHealth()).thenReturn(20);
+        when(firstMockPoke.getCurrentHealth()).thenReturn(0);
+
+        team.reviveMonpoke(firstMockName);
+
+        verify(firstMockPoke).receiveHeal(20);
     }
 }
