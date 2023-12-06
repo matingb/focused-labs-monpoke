@@ -80,9 +80,11 @@ public class MonpokeTest {
     public void healAFaintMonSAhouldThrowAnError() {
         Monpoke mon = givenAMonWith(6, 0);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             mon.heal(10);
         });
+
+        assertEquals("Rule violation - cannot heal a monpoke with a current HP of less than 1", exception.getMessage());
     }
 
     private static Monpoke givenAMonWith(int maxHealth, int actualHealth) {

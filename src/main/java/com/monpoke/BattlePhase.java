@@ -63,13 +63,7 @@ public class BattlePhase {
             }
 
             int healAmount = Integer.parseInt(battleCommands[1]);
-            int amountHealed;
-            try {
-               amountHealed = attackingMonpoke.heal(healAmount);
-            }
-            catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Rule violation - cannot heal a monpoke with a current HP of less than 1");
-            }
+            int amountHealed = attackingMonpoke.heal(healAmount);
 
             return attackingMonpoke.getName() + " healed for " + amountHealed + " to " + attackingMonpoke.getCurrentHealth();
         }

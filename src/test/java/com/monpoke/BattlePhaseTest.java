@@ -71,13 +71,6 @@ public class BattlePhaseTest {
     }
 
     @Test
-    public void tryToHealAFaintMonShouldShowAnErrorMessage() {
-        when(mockMon1.heal(anyInt())).thenThrow(new IllegalArgumentException());
-
-        validateExceptionDuringBattleForCommand(healString, "Rule violation - cannot heal a monpoke with a current HP of less than 1");
-    }
-
-    @Test
     public void healEndsTheTurn() {
         battlePhase.battle(healString);
 

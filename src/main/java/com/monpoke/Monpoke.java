@@ -36,7 +36,7 @@ public class Monpoke {
     public int heal(int healAmount) {
 
         if (currentHealth < 1) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Rule violation - cannot heal a monpoke with a current HP of less than 1");
         }
 
         int health = currentHealth + healAmount;
