@@ -31,9 +31,7 @@ public class BattlePhase {
         Team opposingTeam = teams[1 - (turnCounter % 2)];
         turnCounter++;
         if (battleCommands[0].equals("ICHOOSEYOU")) {
-            String monName = battleCommands[1];
-            currentTeam.chooseMonpoke(monName);
-            return monName + " has entered the battle!";
+            return chooseMon(battleCommands[1], currentTeam);
         } else if (battleCommands[0].equals("ATTACK")) { // Could split out into another method if any more complicated
             Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
             Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
@@ -76,10 +74,22 @@ public class BattlePhase {
             String monToRevive = battleCommands[1];
             currentTeam.reviveMonpoke(monToRevive);
 
-            return monToRevive + " has been revived";
+            String commandOutput = monToRevive + " has been revived";
+
+            if (!attackingMonpoke.getName().equals(monToRevive)) {
+                commandOutput += "\n";
+                commandOutput += chooseMon(monToRevive, currentTeam);
+            }
+
+            return commandOutput;
         }
 
         return "Unreadable attack output";
+    }
+
+    private String chooseMon(String monName, Team currentTeam) {
+        currentTeam.chooseMonpoke(monName);
+        return monName + " has entered the battle!";
     }
 
     public Team getWinner() {

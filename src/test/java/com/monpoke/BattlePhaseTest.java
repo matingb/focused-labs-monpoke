@@ -122,10 +122,20 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulReviveMon() {
+        when(mockMon1.getName()).thenReturn("monToRevive");
+
         String output = battlePhase.battle(reviveString);
 
         verify(mockFirstTeam).reviveMonpoke("monToRevive");
         assertEquals("monToRevive has been revived", output);
+    }
+
+    @Test
+    public void successfulReviveDiffentMonThanSelected() {
+        String output = battlePhase.battle(reviveString);
+
+        verify(mockFirstTeam).reviveMonpoke("monToRevive");
+        assertEquals("monToRevive has been revived\n" + "monToRevive has entered the battle!", output);
     }
 
     @Test
