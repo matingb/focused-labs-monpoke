@@ -1,5 +1,7 @@
 package com.monpoke;
 
+import com.monpoke.commands.Command;
+
 /* Create phase handler for the battle phase of the game */
 public class BattlePhase {
 
@@ -34,61 +36,19 @@ public class BattlePhase {
         Team currentTeam = teams[turnCounter % 2];
         Team opposingTeam = teams[1 - (turnCounter % 2)];
         turnCounter++;
-        if (battleCommands[0].equals("ICHOOSEYOU")) {
-            return chooseMon(battleCommands[1], currentTeam);
-        } else if (battleCommands[0].equals("ATTACK")) { // Could split out into another method if any more complicated
-            Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
-            Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
-            if (attackingMonpoke == null || attackedMonpoke == null) {
-                throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
-            }
 
-            attackedMonpoke.receiveAttack(attackingMonpoke);
-
-            String commandOutput = attackingMonpoke.getName() + " attacked " + attackedMonpoke.getName()
-                    + " for " + attackingMonpoke.getAttack() + " damage!";
-
-            if (opposingTeam.didMonpokeFaint()) {
-                opposingTeam.removeMonpokeFromBattle();
-                commandOutput += "\n";
-                commandOutput += attackedMonpoke.getName() + " has been defeated!";
-                if (opposingTeam.getNumAliveMonpoke() == 0) {
-                    winner = currentTeam;
-                }
-            }
-
-            return commandOutput;
-        } else if (battleCommands[0].equals("HEAL")) {
-            Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
-            Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
-            if (attackingMonpoke == null || attackedMonpoke == null) {
-                throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
-            }
-
-            int healAmount = Integer.parseInt(battleCommands[1]);
-            int amountHealed = currentTeam.healMonpoke(attackingMonpoke.getName(), healAmount);
-
-            return attackingMonpoke.getName() + " healed for " + amountHealed + " to " + attackingMonpoke.getCurrentHealth();
-        } else if (battleCommands[0].equals("REVIVE")) {
-            String monToRevive = battleCommands[1];
-            currentTeam.reviveMonpoke(monToRevive);
-
-            String commandOutput = monToRevive + " has been revived";
-
-            if (currentTeam.getChosenMonpoke() == null) {
-                commandOutput += "\n";
-                commandOutput += chooseMon(monToRevive, currentTeam);
-            }
-
-            return commandOutput;
+        Command command = Command.create(battleCommands[0]);
+        if (command == null) {
+            return "Unreadable attack output";
         }
 
-        return "Unreadable attack output";
-    }
+        String commandOutput = command.execute(battleCommands, currentTeam, opposingTeam);
 
-    private String chooseMon(String monName, Team currentTeam) {
-        currentTeam.chooseMonpoke(monName);
-        return monName + " has entered the battle!";
+        if (opposingTeam.getNumAliveMonpoke() == 0) {
+            winner = currentTeam;
+        }
+
+        return commandOutput;
     }
 
     public Team getWinner() {
