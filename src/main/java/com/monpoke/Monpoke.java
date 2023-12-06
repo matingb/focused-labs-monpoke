@@ -33,8 +33,12 @@ public class Monpoke {
         return currentHealth;
     }
 
-    public void heal(int healAmount) {
+    public int heal(int healAmount) {
         int health = currentHealth + healAmount;
-        currentHealth = Math.min(health, maxHealth);
+        int amountHealed = Math.min(health, maxHealth);
+
+        currentHealth = amountHealed;
+
+        return amountHealed;
     }
 }

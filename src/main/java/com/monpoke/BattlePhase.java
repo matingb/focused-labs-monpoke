@@ -63,9 +63,9 @@ public class BattlePhase {
             }
 
             int healAmount = Integer.parseInt(battleCommands[1]);
-            attackedMonpoke.heal(healAmount);
+            int amountHealed = attackingMonpoke.heal(healAmount);
 
-            String commandOutput = attackingMonpoke.getName() + " healed for " + healAmount + " to " + attackingMonpoke.getCurrentHealth();
+            String commandOutput = attackingMonpoke.getName() + " healed for " + healAmount + " to " + amountHealed;
 
             return commandOutput;
         }

@@ -19,8 +19,8 @@ public class BattlePhaseTest {
 
     String[] chooseString = new String[]{"ICHOOSEYOU", "TestMon1"};
     String[] attackString = new String[]{"ATTACK"};
-    String healAmount = "30";
-    String[] healString = new String[]{"HEAL", healAmount};
+    int healAmount = 30;
+    String[] healString = new String[]{"HEAL", String.valueOf(healAmount)};
 
     @Before
     public void setUp() {
@@ -91,7 +91,7 @@ public class BattlePhaseTest {
 
     @Test
     public void successfulHealMon() {
-        when(mockMon1.getCurrentHealth()).thenReturn(10);
+        when(mockMon1.heal(healAmount)).thenReturn(10);
 
         String output = battlePhase.battle(healString);
 
