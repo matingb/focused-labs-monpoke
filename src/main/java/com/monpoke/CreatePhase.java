@@ -13,7 +13,7 @@ public class CreatePhase {
     /**
      * Processes a create command. Handles validation for too many teams.
      *
-     * @param createCommands Must be a CREATE command with the parameters:
+     * @param createCommand Must be a CREATE command with the parameters:
      *                       CREATE <team-name> <mon-name> <mon-hp> <mon-attack>
      * @return the output for the CREATE event
      */

@@ -13,13 +13,10 @@ public class PhaseHandler {
     /**
      * Handles running through the game and creating the output
      * @param commandScanner Scanner that will feed the game commands line by line
-     * @param createPhase Start of a new create phase
+     * @param createPhase Start of a new creation phase
      * @param battlePhase Start of a new battle phase
-     * @return output of the battle results
      */
     public void runGame(Scanner commandScanner, CreatePhase createPhase, BattlePhase battlePhase, Logger logger) {
-        ArrayList<String> outputStrings = new ArrayList<>();
-
         String[] commandArgs = getNextCommand(commandScanner);
 
         do {
