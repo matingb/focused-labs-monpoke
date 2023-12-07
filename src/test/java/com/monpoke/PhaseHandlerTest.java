@@ -1,8 +1,13 @@
 package com.monpoke;
 
 import com.monpoke.commands.*;
+import com.monpoke.commands.battleCommands.AttackCommand;
+import com.monpoke.commands.battleCommands.ChooseCommand;
+import com.monpoke.commands.battleCommands.HealCommand;
+import com.monpoke.commands.battleCommands.ReviveCommand;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +16,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PhaseHandlerTest {
 
@@ -20,10 +24,10 @@ public class PhaseHandlerTest {
     Scanner mockScanner;
     CreatePhase mockCreate;
     BattlePhase mockBattle;
+    Logger mockLogger;
     Team mockWinner;
 
     String testCreate = "CREATE Rocket Meekachu 3 1";
-    String[] testCreateArr = new String[]{"CREATE", "Rocket", "Meekachu", "3", "1"};
     String testChoose = "ICHOOSEYOU Meekachu";
     String testAttack = "ATTACK";
     String testHeal = "HEAL 30";
@@ -34,7 +38,8 @@ public class PhaseHandlerTest {
     public void setUp() {
         mockScanner = mock(Scanner.class);
         mockCreate = mock(CreatePhase.class);
-        when(mockCreate.create(testCreateArr)).thenReturn("Test Create Output");
+        mockLogger = mock(Logger.class);
+        when(mockCreate.create(any(CreateCommand.class))).thenReturn("Test Create Output");
 
         mockBattle = mock(BattlePhase.class);
         when(mockBattle.battle(any(ChooseCommand.class))).thenReturn("Test Choose Output");
@@ -58,19 +63,22 @@ public class PhaseHandlerTest {
                 .thenReturn(null).thenReturn(null).thenReturn(null)
                 .thenReturn(null).thenReturn(mockWinner);
 
-        ArrayList<String> expectedOutput = new ArrayList<String>(Arrays.asList("Test Create Output", "Test Choose Output",
-                "Test Attack Output", "Test Heal Output", "Test Revive Output", "Winning Test Team is the winner!"));
+        phaseHandler.runGame(mockScanner, mockCreate, mockBattle, mockLogger);
 
-        ArrayList<String> output = phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
-
-        assertEquals(expectedOutput, output);
+        InOrder order = inOrder(mockLogger);
+        order.verify(mockLogger).info("Test Create Output");
+        order.verify(mockLogger).info("Test Choose Output");
+        order.verify(mockLogger).info("Test Attack Output");
+        order.verify(mockLogger).info("Test Heal Output");
+        order.verify(mockLogger).info("Test Revive Output");
+        order.verify(mockLogger).info("Winning Test Team is the winner!");
     }
 
     @Test
     public void unexpectedEndOfInputFile() {
         when(mockScanner.nextLine()).thenThrow(NoSuchElementException.class);
         try {
-            phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
+            phaseHandler.runGame(mockScanner, mockCreate, mockBattle, mockLogger);
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Input file has reached its end without a winner", e.getMessage());
@@ -80,9 +88,9 @@ public class PhaseHandlerTest {
     public void invalidInput() {
         when(mockScanner.nextLine()).thenReturn(invalidComm);
         try {
-            phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
+            phaseHandler.runGame(mockScanner, mockCreate, mockBattle, mockLogger);
         } catch (IllegalArgumentException e) {
-            assertEquals("Unreadable command input", e.getMessage());
+            assertEquals("The first commands must be CREATE commands", e.getMessage());
         }
     }
 
@@ -90,7 +98,7 @@ public class PhaseHandlerTest {
     public void invalidBattleInput() {
         when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(invalidComm);
         try {
-            phaseHandler.runGame(mockScanner, mockCreate, mockBattle);
+            phaseHandler.runGame(mockScanner, mockCreate, mockBattle, mockLogger);
         } catch (IllegalArgumentException e) {
             assertEquals("Unreadable battle command input", e.getMessage());
         }

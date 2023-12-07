@@ -1,5 +1,7 @@
 package com.monpoke;
 
+import com.monpoke.commands.CreateCommand;
+
 import java.util.stream.IntStream;
 
 /* Create phase handler for the team creation phase of the game */
@@ -15,14 +17,15 @@ public class CreatePhase {
      *                       CREATE <team-name> <mon-name> <mon-hp> <mon-attack>
      * @return the output for the CREATE event
      */
-    public String create(String[] createCommands) {
-        String teamName = createCommands[1];
-        String monName = createCommands[2];
-        int hp = Integer.parseInt(createCommands[3]);
-        int attack = Integer.parseInt(createCommands[4]);
+    public String create(CreateCommand createCommand) {
+        String teamName = createCommand.getTeamName();
+        String monName = createCommand.getMonName();
+        int hp = createCommand.getHp();
+        int attack = createCommand.getAttack();
+
         Monpoke newMon = new Monpoke(monName, hp, attack);
         int indexOfTeam = findTeamIndex(teamName);
-        Team monOwner = null;
+        Team monOwner;
 
         if (indexOfTeam == -1) {
             if (numTeams < 2) {

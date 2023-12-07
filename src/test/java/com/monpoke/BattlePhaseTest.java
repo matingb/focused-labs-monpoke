@@ -1,9 +1,9 @@
 package com.monpoke;
 
-import com.monpoke.commands.AttackCommand;
-import com.monpoke.commands.ChooseCommand;
-import com.monpoke.commands.HealCommand;
-import com.monpoke.commands.ReviveCommand;
+import com.monpoke.commands.battleCommands.AttackCommand;
+import com.monpoke.commands.battleCommands.ChooseCommand;
+import com.monpoke.commands.battleCommands.HealCommand;
+import com.monpoke.commands.battleCommands.ReviveCommand;
 import org.junit.Before;
 import org.junit.Test;
 

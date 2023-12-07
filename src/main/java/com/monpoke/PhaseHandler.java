@@ -1,7 +1,8 @@
 package com.monpoke;
 
-import com.monpoke.commands.BattleCommand;
+import com.monpoke.commands.battleCommands.BattleCommand;
 import com.monpoke.commands.CommandName;
+import com.monpoke.commands.CreateCommand;
 
 import java.util.*;
 
@@ -16,33 +17,29 @@ public class PhaseHandler {
      * @param battlePhase Start of a new battle phase
      * @return output of the battle results
      */
-    public ArrayList<String> runGame(Scanner commandScanner, CreatePhase createPhase, BattlePhase battlePhase) {
+    public void runGame(Scanner commandScanner, CreatePhase createPhase, BattlePhase battlePhase, Logger logger) {
         ArrayList<String> outputStrings = new ArrayList<>();
 
         String[] commandArgs = getNextCommand(commandScanner);
 
-        if(!"CREATE".equals(commandArgs[0])) {
-            throw new IllegalArgumentException("Unreadable command input");
-        }
-
-        while ("CREATE".equals(commandArgs[0])) {
-            outputStrings.add(createPhase.create(commandArgs));
+        do {
+            CreateCommand createCommand = getCreateCommand(commandArgs);
+            logger.info(createPhase.create(createCommand));
             commandArgs = getNextCommand(commandScanner);
-        }
+        } while ("CREATE".equals(commandArgs[0]));
 
         battlePhase.startBattle(createPhase.getTeams());
 
         while (battlePhase.getWinner() == null) {
             BattleCommand battleCommand = getBattleCommand(commandArgs);
-            outputStrings.add(battlePhase.battle(battleCommand));
+            logger.info(battlePhase.battle(battleCommand));
 
             if (battlePhase.getWinner() == null) {
                 commandArgs = getNextCommand(commandScanner);
             }
         }
 
-        outputStrings.add(battlePhase.getWinner().getTeamName() + " is the winner!");
-        return outputStrings;
+        logger.info(battlePhase.getWinner().getTeamName() + " is the winner!");
     }
 
     private String[] getNextCommand(Scanner commandScanner) {
@@ -61,12 +58,34 @@ public class PhaseHandler {
             CommandName commandName = CommandName.valueOf(battleCommands[0]);
             battleCommands = Arrays.copyOfRange(battleCommands, 1, battleCommands.length);
             battleCommand = BattleCommand.create(commandName, battleCommands);
+
+            if(battleCommand == null) {
+                throw new IllegalArgumentException("Unreadable battle command input");
+            }
         }
         catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Unreadable battle command input");
         }
 
         return battleCommand;
+    }
+
+    private CreateCommand getCreateCommand(String[] createParameters) {
+
+        CommandName commandName;
+        try {
+           commandName = CommandName.valueOf(createParameters[0]);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("The first commands must be CREATE commands");
+        }
+
+        if (!CommandName.CREATE.equals(commandName)) {
+            throw new IllegalArgumentException("The first commands must be CREATE commands");
+        }
+
+        createParameters = Arrays.copyOfRange(createParameters, 1, createParameters.length);
+
+        return new CreateCommand(createParameters);
     }
 
 }

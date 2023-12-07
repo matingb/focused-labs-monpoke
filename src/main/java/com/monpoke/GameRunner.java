@@ -10,21 +10,17 @@ public class GameRunner {
 
     public static void main(String[] args) {
         Scanner commandScanner = getScannerType(args);
-        ArrayList<String> outputStrings = new ArrayList<>();
 
         CreatePhase createPhase = new CreatePhase();
         BattlePhase battlePhase = new BattlePhase();
         PhaseHandler phaseHandler = new PhaseHandler();
+        Logger logger = new Logger();
 
         try {
-            outputStrings = phaseHandler.runGame(commandScanner, createPhase, battlePhase);
+            phaseHandler.runGame(commandScanner, createPhase, battlePhase, logger);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             System.exit(1);
-        }
-
-        for (String line : outputStrings) {
-            System.out.println(line);
         }
 
         commandScanner.close();

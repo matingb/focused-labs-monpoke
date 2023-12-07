@@ -1,6 +1,6 @@
 package com.monpoke;
 
-import com.monpoke.commands.BattleCommand;
+import com.monpoke.commands.battleCommands.BattleCommand;
 
 /* Create phase handler for the battle phase of the game */
 public class BattlePhase {

@@ -1,7 +1,8 @@
-package com.monpoke.commands;
+package com.monpoke.commands.battleCommands;
 
 import com.monpoke.Monpoke;
 import com.monpoke.Team;
+import com.monpoke.commands.battleCommands.AttackCommand;
 import org.junit.Before;
 import org.junit.Test;
 

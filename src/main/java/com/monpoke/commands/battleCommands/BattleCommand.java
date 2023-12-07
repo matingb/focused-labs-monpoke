@@ -1,10 +1,10 @@
-package com.monpoke.commands;
+package com.monpoke.commands.battleCommands;
 
 import com.monpoke.Team;
+import com.monpoke.commands.Command;
+import com.monpoke.commands.CommandName;
 
-import java.util.Arrays;
-
-public abstract class BattleCommand {
+public abstract class BattleCommand extends Command {
      public static BattleCommand create(CommandName commandName, String[] commandParameters) {
          switch (commandName) {
             case ICHOOSEYOU:
@@ -21,10 +21,4 @@ public abstract class BattleCommand {
     }
 
     public abstract String execute(Team currentTeam, Team opposingTeam);
-
-    protected void validateParametersSize(String[] commandParameters, int expectedSize) {
-        if (commandParameters.length != expectedSize) {
-            throw new IllegalArgumentException("Expecting " + expectedSize + " parameters for command but were received " + commandParameters.length);
-        }
-    }
 }

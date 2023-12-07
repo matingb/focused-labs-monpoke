@@ -1,4 +1,4 @@
-package com.monpoke.commands;
+package com.monpoke.commands.battleCommands;
 
 import com.monpoke.Team;
 

@@ -1,5 +1,6 @@
 package com.monpoke;
 
+import com.monpoke.commands.CreateCommand;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,10 +8,11 @@ import static org.junit.Assert.*;
 
 public class CreatePhaseTest {
     CreatePhase createPhase;
-    String[] testCreate = new String[]{"CREATE", "Rocket", "Meekachu", "3", "1"};
-    String[] testCreate2 = new String[]{"CREATE", "Rocket", "Rastly", "5", "6"};
-    String[] testCreate3 = new String[]{"CREATE", "Green", "Smorelax", "2", "1"};
-    String[] testCreate4 = new String[]{"CREATE", "Magma", "Smorelax", "2", "1"};
+
+    CreateCommand testCreate = new CreateCommand(new String[]{"Rocket", "Meekachu", "3", "1"});
+    CreateCommand testCreate2 = new CreateCommand(new String[]{"Rocket", "Rastly", "5", "6"});
+    CreateCommand testCreate3 = new CreateCommand(new String[]{"Green", "Smorelax", "2", "1"});
+    CreateCommand testCreate4 = new CreateCommand(new String[]{"Magma", "Smorelax", "2", "1"});
 
     @Before
     public void setUp() {
