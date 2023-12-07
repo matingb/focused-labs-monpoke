@@ -57,7 +57,7 @@ public class PhaseHandler {
             battleCommand = BattleCommand.create(commandName, battleCommands);
 
             if(battleCommand == null) {
-                throw new IllegalArgumentException("Unreadable battle command input");
+                throw new IllegalArgumentException();
             }
         }
         catch (IllegalArgumentException e){

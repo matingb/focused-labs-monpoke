@@ -104,4 +104,14 @@ public class PhaseHandlerTest {
         }
     }
 
+    @Test
+    public void cannotUseCreateCommandDuringBattlePhase() {
+        when(mockScanner.nextLine()).thenReturn(testCreate).thenReturn(testChoose).thenReturn(testCreate);
+        try {
+            phaseHandler.runGame(mockScanner, mockCreate, mockBattle, mockLogger);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Unreadable battle command input", e.getMessage());
+        }
+    }
+
 }
