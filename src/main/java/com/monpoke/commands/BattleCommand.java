@@ -5,10 +5,8 @@ import com.monpoke.Team;
 import java.util.Arrays;
 
 public abstract class BattleCommand {
-     public static BattleCommand create(String[] commandParameters) {
-        CommandName commandName = CommandName.valueOf(commandParameters[0]);
-        commandParameters = Arrays.copyOfRange(commandParameters, 1, commandParameters.length);
-        switch (commandName) {
+     public static BattleCommand create(CommandName commandName, String[] commandParameters) {
+         switch (commandName) {
             case ICHOOSEYOU:
                 return new ChooseCommand(commandParameters);
             case ATTACK:

@@ -1,7 +1,6 @@
 package com.monpoke;
 
 import com.monpoke.commands.BattleCommand;
-import com.monpoke.commands.CommandName;
 
 /* Create phase handler for the battle phase of the game */
 public class BattlePhase {
@@ -19,7 +18,7 @@ public class BattlePhase {
      * Processes a battle command. Handles validation for all battle rules.
      * The battle phase will always start with the team first in order.
      *
-     * @param battleCommands Must be an ICHOOSEYOU | ATTACK | HEAL | REVIVE command.
+     * @param battleCommand Must be an ICHOOSEYOU | ATTACK | HEAL | REVIVE command.
      *                       ATTACK will ignore any parameters,
      *                       ICHOOSEYOU must have the parameters:
      *                       ICHOOSEYOU <mon-name>
@@ -29,7 +28,7 @@ public class BattlePhase {
      *                       REVIVE <mon-name>
      * @return the output for the ICHOOSEYOU | ATTACK | HEAL | REVIVE event
      */
-    public String battle(String[] battleCommands) {
+    public String battle(BattleCommand battleCommand) {
         if (teams == null) {
             throw new IllegalArgumentException("Rule violation - battle has not been started");
         }
@@ -38,12 +37,11 @@ public class BattlePhase {
         Team opposingTeam = teams[1 - (turnCounter % 2)];
         turnCounter++;
 
-        BattleCommand command = BattleCommand.create(battleCommands);
-        if (command == null) {
+        if (battleCommand == null) {
             return "Invalid battle command";
         }
 
-        String commandOutput = command.execute(currentTeam, opposingTeam);
+        String commandOutput = battleCommand.execute(currentTeam, opposingTeam);
 
         if (opposingTeam.getNumAliveMonpoke() == 0) {
             winner = currentTeam;

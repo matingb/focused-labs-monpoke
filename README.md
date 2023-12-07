@@ -20,8 +20,8 @@
 - A team’s turn can be either choosing, heal, revive a friendly Monpoké or attack a Monpoké with their currently
 chosen one.
 - Attacking Monpoké depletes the enemy Monpoké HP for the value of their AP.
-- Healing Monpoké restore HP of the selected Monpoké for the amount of heal given.
-- Reviving a Monpoké restore all the HP of the Monpoké. (each team can use revive once per match)
+- Healing Monpoké restores HP of the selected Monpoké for the amount of heal given.
+- Reviving a Monpoké restores all the HP of the Monpoké. (Each team can use revive once per match)
 - A Monpoké is defeated when its HP is less than or equal to 0.
 - The game ends when all of a team’s Monpoké have been defeated.
 We ask that you build a program that plays the game! The program should accept text
@@ -49,12 +49,12 @@ standard out. The program should allow for:
 - Teams have multiple Monpoké
 - The battle stage starts when the first ICHOOSEYOU command happens.
 - Validation
-    - Pokemon must have 1 HP or greater
-    - Pokemon must have 1 AP or greater
+    - Monpoké must have 1 HP or greater
+    - Monpoké must have 1 AP or greater
     - The battle cannot begin until there are two teams
 ##### Battle
 - The team that was created first takes the first turn
-- A turn is either choosing, healing, reviving or attacking a Monpoké with the a chosen Monpoké
+- A turn is either choosing, healing, reviving or attacking a Monpoké with the chosen Monpoké
 - The first turn of each team must be choosing a Monpoké
 - Attacks do damage equal to the attack value to the currently chosen enemy Monpoké
 - A Monpoké is considered defeated when it’s HP is 0 or lower
@@ -69,7 +69,7 @@ Monpoké
         - Who is defeated 
   - A team cannot revive a Monpoké
         - Who is not on your team
-        - Whos is alive  
+        - Who is alive  
 
 #### Game Ends
 - When all of a team’s Monpoké are defeated

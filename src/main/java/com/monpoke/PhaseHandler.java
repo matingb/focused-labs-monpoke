@@ -1,9 +1,9 @@
 package com.monpoke;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import com.monpoke.commands.BattleCommand;
+import com.monpoke.commands.CommandName;
+
+import java.util.*;
 
 public class PhaseHandler {
 
@@ -18,41 +18,26 @@ public class PhaseHandler {
      */
     public ArrayList<String> runGame(Scanner commandScanner, CreatePhase createPhase, BattlePhase battlePhase) {
         ArrayList<String> outputStrings = new ArrayList<>();
-        Boolean inBattle = false;
+
+        String[] commandArgs = getNextCommand(commandScanner);
+
+        if(!"CREATE".equals(commandArgs[0])) {
+            throw new IllegalArgumentException("Unreadable command input");
+        }
+
+        while ("CREATE".equals(commandArgs[0])) {
+            outputStrings.add(createPhase.create(commandArgs));
+            commandArgs = getNextCommand(commandScanner);
+        }
+
+        battlePhase.startBattle(createPhase.getTeams());
 
         while (battlePhase.getWinner() == null) {
-            String nextCommand = getNextCommand(commandScanner);
-            String[] commandArgs = parseCommandArgs(nextCommand);
+            BattleCommand battleCommand = getBattleCommand(commandArgs);
+            outputStrings.add(battlePhase.battle(battleCommand));
 
-            switch (commandArgs[0]) {
-                case "CREATE":
-                    if (inBattle) {
-                        throw new IllegalArgumentException("Rule violated - battle is already in progress");
-                    }
-                    outputStrings.add(createPhase.create(commandArgs));
-                    break;
-
-                case "ICHOOSEYOU":
-                    // Initiate battle on first ICHOOSEYOU, no fall through intentionally
-                    if (!inBattle) {
-                        if (!createPhase.readyToBattle()) {
-                            throw new IllegalArgumentException("Rule violated - teams not created");
-                        }
-                        battlePhase.startBattle(createPhase.getTeams());
-                        inBattle = true;
-                    }
-                    outputStrings.add(battlePhase.battle(commandArgs));
-                    break;
-
-
-                case "ATTACK":
-                case "HEAL":
-                case "REVIVE":
-                    outputStrings.add(battlePhase.battle(commandArgs));
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("Unreadable command input");
+            if (battlePhase.getWinner() == null) {
+                commandArgs = getNextCommand(commandScanner);
             }
         }
 
@@ -60,15 +45,28 @@ public class PhaseHandler {
         return outputStrings;
     }
 
-    private String getNextCommand(Scanner commandScanner) {
+    private String[] getNextCommand(Scanner commandScanner) {
         try {
-            return commandScanner.nextLine();
+            return commandScanner.nextLine().split(DELIMITER);
         } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Input file has reached its end without a winner");
         }
     }
 
-    private String[] parseCommandArgs(String command) {
-        return command.split(DELIMITER);
+    private BattleCommand getBattleCommand(String[] battleCommands) {
+
+        BattleCommand battleCommand;
+
+        try {
+            CommandName commandName = CommandName.valueOf(battleCommands[0]);
+            battleCommands = Arrays.copyOfRange(battleCommands, 1, battleCommands.length);
+            battleCommand = BattleCommand.create(commandName, battleCommands);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Unreadable battle command input");
+        }
+
+        return battleCommand;
     }
+
 }
