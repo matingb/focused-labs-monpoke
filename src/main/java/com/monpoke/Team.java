@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Team {
-    private String teamName;
+    private final String teamName;
     private Monpoke chosenMonpoke;
-    private Map<String, Monpoke> ownedMonpoke;
+    private final Map<String, Monpoke> ownedMonpoke;
     private int reviveCounter = 1;
 
     Team(String teamName) {
@@ -32,15 +32,17 @@ public class Team {
     }
 
     public void chooseMonpoke(String monName) {
-        this.chosenMonpoke = ownedMonpoke.get(monName);
+        Monpoke monpoke = ownedMonpoke.get(monName);
 
-        if (chosenMonpoke == null) {
+        if (monpoke == null) {
             throw new IllegalArgumentException("Rule violation - Team " + teamName + " does not own the chosen Monpoke " + monName);
         }
 
-        if (chosenMonpoke.getCurrentHealth() < 1) {
+        if (monpoke.getCurrentHealth() < 1) {
             throw new IllegalArgumentException("Rule violation - cannot choose a fainted monpoke");
         }
+
+        this.chosenMonpoke = monpoke;
     }
 
     public int healMonpoke(String monName, int healAmount) {

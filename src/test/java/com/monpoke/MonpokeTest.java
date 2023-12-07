@@ -67,11 +67,11 @@ public class MonpokeTest {
 
     @Test
     public void monpokeHealthAfterHealShouldNotBeBiggerThanInitialHealth() {
-        Monpoke mon = givenAMonWith(6, 2);
+        Monpoke mon = givenAMonWith(7, 3);
 
         int amountHealed = mon.receiveHeal(10);
 
-        assertEquals(6, mon.getCurrentHealth());
+        assertEquals(7, mon.getCurrentHealth());
         assertEquals(4, amountHealed);
     }
 

@@ -1,10 +1,10 @@
 package com.monpoke;
 
 public class Monpoke {
-    private String name;
+    private final String name;
     private int currentHealth;
-    private int maxHealth;
-    private int attack;
+    private final int maxHealth;
+    private final int attack;
 
     public Monpoke(String name, int health, int attack) {
         this.name = name;

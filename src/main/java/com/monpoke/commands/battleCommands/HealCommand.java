@@ -16,9 +16,7 @@ public class HealCommand extends BattleCommand {
     public String execute(Team currentTeam, Team opposingTeam) {
         Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
         Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
-        if (attackingMonpoke == null || attackedMonpoke == null) {
-            throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
-        }
+        validateBothTeamsHaveChosenAMonpoke(attackingMonpoke, attackedMonpoke);
 
         int amountHealed = currentTeam.healMonpoke(attackingMonpoke.getName(), healAmount);
 

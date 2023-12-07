@@ -20,11 +20,13 @@ public class TeamTest {
         firstMockName = "MockPoke1";
         secMockName = "MockPoke2";
         when(firstMockPoke.getName()).thenReturn(firstMockName);
+        when(firstMockPoke.getCurrentHealth()).thenReturn(1);
         when(secMockPoke.getName()).thenReturn(secMockName);
 
         team = new Team("TestName");
         team.addMonpoke(firstMockPoke);
         team.addMonpoke(secMockPoke);
+        team.chooseMonpoke(firstMockName);
     }
 
     @Test
@@ -43,12 +45,12 @@ public class TeamTest {
 
     @Test
     public void invalidChooseMonpoke() {
-        try {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             team.chooseMonpoke("Dudegeo");
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Rule violation - Team TestName does not own the chosen Monpoke Dudegeo", e.getMessage());
-        }
+        });
+
+        assertEquals("Rule violation - Team TestName does not own the chosen Monpoke Dudegeo", exception.getMessage());
+        assertEquals("MockPoke1", team.getChosenMonpoke().getName());
     }
 
     @Test
@@ -56,10 +58,11 @@ public class TeamTest {
         when(firstMockPoke.getCurrentHealth()).thenReturn(0);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            team.chooseMonpoke(firstMockName);
+            team.chooseMonpoke(secMockName);
         });
 
         assertEquals("Rule violation - cannot choose a fainted monpoke", exception.getMessage());
+        assertEquals("MockPoke1", team.getChosenMonpoke().getName());
     }
 
     @Test
@@ -122,6 +125,7 @@ public class TeamTest {
 
     @Test
     public void reviveMoreThanOnceGetsAnError() {
+        when(firstMockPoke.getCurrentHealth()).thenReturn(0);
         team.reviveMonpoke(firstMockName);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

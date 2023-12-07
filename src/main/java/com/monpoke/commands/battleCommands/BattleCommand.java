@@ -1,5 +1,6 @@
 package com.monpoke.commands.battleCommands;
 
+import com.monpoke.Monpoke;
 import com.monpoke.Team;
 import com.monpoke.commands.Command;
 import com.monpoke.commands.CommandName;
@@ -21,4 +22,9 @@ public abstract class BattleCommand extends Command {
     }
 
     public abstract String execute(Team currentTeam, Team opposingTeam);
+    protected void validateBothTeamsHaveChosenAMonpoke(Monpoke attackingMonpoke, Monpoke attackedMonpoke) {
+        if (attackingMonpoke == null || attackedMonpoke == null) {
+            throw new IllegalArgumentException("Rule violation - both teams did not have chosen monpoke out");
+        }
+    }
 }
