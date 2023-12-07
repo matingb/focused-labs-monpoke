@@ -16,11 +16,9 @@ public class AttackCommandTest {
     Team currentTeam ;
     Team opposingTeam;
 
-    String[] commandParameters = new String[]{"ATTACK"};
-
     @Before
     public void setup() {
-        attackCommand = new AttackCommand();
+        attackCommand = new AttackCommand(new String[]{});
         currentTeam = mock(Team.class);
         opposingTeam = mock(Team.class);
     }
@@ -29,7 +27,7 @@ public class AttackCommandTest {
         when(currentTeam.getChosenMonpoke()).thenReturn(null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            attackCommand.execute(commandParameters, currentTeam, opposingTeam);
+            attackCommand.execute(currentTeam, opposingTeam);
         });
 
         assertEquals("Rule violation - both teams did not have chosen monpoke out", exception.getMessage());
@@ -41,9 +39,18 @@ public class AttackCommandTest {
         when(opposingTeam.getChosenMonpoke()).thenReturn(null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            attackCommand.execute(commandParameters, currentTeam, opposingTeam);
+            attackCommand.execute(currentTeam, opposingTeam);
         });
 
         assertEquals("Rule violation - both teams did not have chosen monpoke out", exception.getMessage());
+    }
+
+    @Test
+    public void cannotCreateAttackCommandWithMoreThan1Parameter() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new AttackCommand(new String[]{"30"});
+        });
+
+        assertEquals("Expecting 0 parameters for command but were received 1", exception.getMessage());
     }
 }

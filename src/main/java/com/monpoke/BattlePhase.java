@@ -1,6 +1,7 @@
 package com.monpoke;
 
-import com.monpoke.commands.Command;
+import com.monpoke.commands.BattleCommand;
+import com.monpoke.commands.CommandName;
 
 /* Create phase handler for the battle phase of the game */
 public class BattlePhase {
@@ -37,12 +38,12 @@ public class BattlePhase {
         Team opposingTeam = teams[1 - (turnCounter % 2)];
         turnCounter++;
 
-        Command command = Command.create(battleCommands[0]);
+        BattleCommand command = BattleCommand.create(battleCommands);
         if (command == null) {
-            return "Unreadable attack output";
+            return "Invalid battle command";
         }
 
-        String commandOutput = command.execute(battleCommands, currentTeam, opposingTeam);
+        String commandOutput = command.execute(currentTeam, opposingTeam);
 
         if (opposingTeam.getNumAliveMonpoke() == 0) {
             winner = currentTeam;

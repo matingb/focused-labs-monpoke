@@ -18,18 +18,17 @@ public class HealCommandTest {
 
     @Before
     public void setup() {
-        healCommand = new HealCommand();
+        healCommand = new HealCommand(new String[]{"30"});
         currentTeam = mock(Team.class);
         opposingTeam = mock(Team.class);
     }
 
     @Test
     public void whenThereIsNoChosenMonpokeForFirstTeamWhenExecuteShouldGetAnError() {
-        String[] commandParameters = new String[]{"HEAL", "30"};
         when(currentTeam.getChosenMonpoke()).thenReturn(null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            healCommand.execute(commandParameters, currentTeam, opposingTeam);
+            healCommand.execute(currentTeam, opposingTeam);
         });
 
         assertEquals("Rule violation - both teams did not have chosen monpoke out", exception.getMessage());
@@ -37,14 +36,31 @@ public class HealCommandTest {
 
     @Test
     public void whenThereIsNoChosenMonpokeForSecondTeamWhenExecuteShouldGetAnError() {
-        String[] commandParameters = new String[]{"HEAL", "30"};
         when(currentTeam.getChosenMonpoke()).thenReturn(new Monpoke("monpokeName",5,5));
         when(opposingTeam.getChosenMonpoke()).thenReturn(null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            healCommand.execute(commandParameters, currentTeam, opposingTeam);
+            healCommand.execute(currentTeam, opposingTeam);
         });
 
         assertEquals("Rule violation - both teams did not have chosen monpoke out", exception.getMessage());
+    }
+
+    @Test
+    public void cannotCreateHealCommandWithMoreThan2Parameters() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new HealCommand(new String[]{"30", "extraParameter"});
+        });
+
+        assertEquals("Expecting 1 parameters for command but were received 2", exception.getMessage());
+    }
+
+    @Test
+    public void cannotCreateHealCommandWithoutHealAmount() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new HealCommand(new String[]{});
+        });
+
+        assertEquals("Expecting 1 parameters for command but were received 0", exception.getMessage());
     }
 }

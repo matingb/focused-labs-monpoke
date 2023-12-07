@@ -3,9 +3,13 @@ package com.monpoke.commands;
 import com.monpoke.Monpoke;
 import com.monpoke.Team;
 
-public class AttackCommand extends Command{
+public class AttackCommand extends BattleCommand {
+    public AttackCommand(String[] commandParameters) {
+        validateParametersSize(commandParameters, 0);
+    }
+
     @Override
-    public String execute(String[] commandParameters, Team currentTeam, Team opposingTeam) {
+    public String execute(Team currentTeam, Team opposingTeam) {
         Monpoke attackingMonpoke = currentTeam.getChosenMonpoke();
         Monpoke attackedMonpoke = opposingTeam.getChosenMonpoke();
         if (attackingMonpoke == null || attackedMonpoke == null) {
